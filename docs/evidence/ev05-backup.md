@@ -77,11 +77,17 @@ Backup lama yang sudah melewati masa retensi akan dihapus setelah dipastikan bac
 
 Catatan: Jadwal dan retensi merupakan kebijakan yang telah ditetapkan. Pelaksanaan backup berkala masih dilakukan secara manual dan belum diotomatisasi.
 
-## 6. Batasan Backup
+## 6. Batasan Backup dan Pemulihan
 
-Backup ini mencakup direktori proyek Smart Summarizer, bukan image penuh VPS atau seluruh sistem operasi.
+Backup mencakup direktori proyek Smart Summarizer, bukan image penuh VPS atau seluruh sistem operasi.
 
-Pengujian pemulihan (restore test) belum dilakukan dan akan didokumentasikan secara terpisah.
+Pengujian pemulihan file proyek telah dilakukan pada 7 November 2026 dan diverifikasi ulang pada 8 November 2026. Pengujian berhasil memulihkan 86 dari 86 file dan seluruh pemeriksaan SHA-256 menunjukkan hasil cocok.
+
+Durasi pemulihan awal tercatat 57,92 detik. Pengujian dilakukan pada lingkungan staging Windows melalui WSL, bukan pada VM VPS baru.
+
+Pemulihan seluruh VM dan konfigurasi sistem operasi belum diuji. RPO aktual belum dapat diukur karena aplikasi belum memiliki database atau penyimpanan data persisten yang terverifikasi. Jadwal backup mingguan masih merupakan kebijakan manual dan belum dibuktikan melalui pelaksanaan rutin.
+
+Rincian pengujian pemulihan tersedia pada `docs/evidence/ev06-restore.md`.
 
 ## 7. Kesimpulan
 
@@ -89,9 +95,9 @@ Backup proyek Smart Summarizer berhasil dibuat dan disimpan pada dua lokasi, yai
 
 Arsip terenkripsi dibuat menggunakan 7-Zip dengan algoritma AES-256. Integritas arsip diperiksa menggunakan SHA-256 dan menghasilkan status CHECKSUM VALID.
 
-Kebijakan jadwal backup mingguan dan retensi empat backup telah ditetapkan. Namun, pelaksanaan berkala masih manual dan pengujian pemulihan belum dilakukan.
+Pengujian pemulihan file proyek berhasil dilakukan dengan hasil 86 dari 86 file berhasil dipulihkan dan seluruh hash SHA-256 cocok. Durasi restore awal tercatat 57,92 detik.
 
-Dengan demikian, backup eksternal dan perlindungan enkripsi sudah diterapkan, sedangkan otomatisasi backup dan pengujian pemulihan masih perlu ditindaklanjuti
+Dengan demikian, backup eksternal, enkripsi, dan pemulihan file proyek telah berhasil dibuktikan. Namun, pemulihan seluruh VM, pengukuran RPO aktual, serta pengujian target RTO/RPO formal masih perlu ditindaklanjuti.
 
 ## 8. Log Pelaksanaan Backup
 
