@@ -27,8 +27,7 @@ Pengujian ini merupakan pemulihan tingkat file proyek, bukan pemulihan seluruh V
 | Mulai restore | 7 November 2026, 20:37:27 WIB |
 | Selesai restore | 7 November 2026, 20:38:25 WIB |
 | Durasi | 57,92 detik |
-
-RTO yang terukur untuk pemulihan file ke staging adalah 57,92 detik. Target RTO sebelumnya belum ditetapkan sehingga belum dapat dinyatakan memenuhi target tertentu.
+Durasi pemulihan file proyek ke staging yang berhasil diamati adalah 57,92 detik. Nilai ini merupakan durasi restore file, bukan hasil pengujian pemenuhan target RTO formal.
 
 ## 4. Pemeriksaan Integritas Backup
 
@@ -117,3 +116,23 @@ Pemeriksaan dilakukan menggunakan Python melalui WSL. Setiap file dalam arsip di
 Pengujian ulang ini memperkuat bukti integritas pemulihan file proyek. Durasi pengujian ulang tidak dicatat sehingga tidak digunakan sebagai pengukuran RTO baru.
 
 Pengujian tetap terbatas pada pemulihan file proyek ke staging Windows melalui WSL, bukan pemulihan keseluruhan VM VPS.
+
+
+## 10. Pemetaan Kriteria Audit Restore
+
+| Kriteria | Hasil dan Keterangan |
+|---|---|
+| Simulasi kehilangan data | Simulasi kehilangan direktori proyek dan pemulihan dari arsip backup ke direktori staging berhasil dilakukan. |
+| Timestamp | Restore awal dimulai pukul 20:37:27 WIB dan selesai pukul 20:38:25 WIB pada 7 November 2026. |
+| Durasi | 57,92 detik untuk pemulihan file proyek ke staging. |
+| Integrity check | PASS, sebanyak 86 file diperiksa dan seluruh SHA-256 cocok pada verifikasi ulang 8 November 2026. |
+| Row count | Tidak berlaku pada pengujian ini karena belum terdapat database atau tabel data transaksi yang terverifikasi. |
+| RPO aktual | Belum dapat diukur karena belum tersedia data persisten yang menjadi dasar pengukuran kehilangan data. |
+| RTO | Durasi pemulihan file yang teramati adalah 57,92 detik. Nilai tersebut bukan bukti pemenuhan target RTO formal karena target belum ditetapkan. |
+| Pemulihan seluruh VM | Belum diuji. Pengujian hanya mencakup pemulihan file proyek ke lingkungan staging Windows melalui WSL. |
+
+### Kesimpulan Pemetaan
+
+Kriteria tanggal, timestamp, durasi pemulihan file, jumlah file, dan integritas checksum telah memiliki bukti. Row count tidak berlaku pada kondisi proyek saat ini. Sementara itu, pengukuran RPO aktual, target RTO/RPO formal, dan pemulihan seluruh VM masih menjadi keterbatasan pengujian.
+
+Status bukti restore: **TERSEDIA DAN TERVERIFIKASI SEBAGIAN**.
