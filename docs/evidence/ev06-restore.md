@@ -87,3 +87,33 @@ Seluruh 86 file yang terdapat dalam arsip backup berhasil ditemukan pada direkto
 Aplikasi juga berhasil diimpor dan endpoint utama memberikan respons HTTP 200 pada lingkungan staging.
 
 Dengan demikian, pengujian pemulihan file proyek dinyatakan berhasil. Namun, pengujian ini belum membuktikan pemulihan seluruh VM VPS maupun pemenuhan target RTO dan RPO formal.
+
+## 9. Verifikasi Ulang Integritas Restore (8 November 2026)
+
+Pada 8 November 2026 dilakukan pengujian ulang menggunakan arsip backup yang sama, dengan tujuan memastikan bahwa hasil pemulihan dapat diverifikasi kembali pada direktori staging baru.
+
+| Pemeriksaan | Hasil |
+|---|---|
+| Arsip sumber | smart-summarizer-backup-2026-11-07.tar.gz |
+| SHA-256 arsip | Cocok dengan hash yang tercatat pada bukti backup |
+| Jumlah file dalam arsip | 86 |
+| Jumlah file hasil restore | 86 |
+| Perbandingan nama dan struktur file | Cocok, tanpa perbedaan |
+| Pemeriksaan SHA-256 per file | 86 cocok |
+| File hilang | 0 |
+| File dengan hash berbeda | 0 |
+| Status integritas | PASS |
+
+Lokasi hasil restore ulang pada komputer Windows:
+
+`D:\Restore-Test-Final\cc-m03`
+
+Pemeriksaan dilakukan menggunakan Python melalui WSL. Setiap file dalam arsip dibandingkan dengan file hasil restore menggunakan SHA-256. Hasil pemeriksaan menunjukkan:
+
+- File diperiksa: 86.
+- File bermasalah: 0.
+- Hasil: `PASS: Seluruh 86 file memiliki SHA-256 yang cocok.`
+
+Pengujian ulang ini memperkuat bukti integritas pemulihan file proyek. Durasi pengujian ulang tidak dicatat sehingga tidak digunakan sebagai pengukuran RTO baru.
+
+Pengujian tetap terbatas pada pemulihan file proyek ke staging Windows melalui WSL, bukan pemulihan keseluruhan VM VPS.
